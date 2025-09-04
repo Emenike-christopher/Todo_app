@@ -1,0 +1,35 @@
+{% extends "Todo_app/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}{% if form.instance.pk %}Update Task{% else %}Create Task{% endif %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-start align-items-start" style="background-color: #eef5ff; min-height: 100vh;">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-primary text-white rounded-top-3">
+                <h5 class="mb-0">
+                    {% if form.instance.pk %}Update Task{% else %}Create Task{% endif %}
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% bootstrap_form form layout='vertical' %}
+                    <div class="d-grid">
+                        {% if form.instance.pk %}
+                            <button type="submit" class="btn btn-new-task-sidebar">
+                                Update Task
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-new-task-sidebar">
+                                + Create Task
+                            </button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,615 @@
+/* ============================
+   General Layout
+============================ */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.wrapper {
+    display: flex;
+    height: calc(100vh - 56px);
+}
+
+/* ============================
+   Sidebar
+============================ */
+/* Sidebar stays fixed, no scrolling */
+.sidebar {
+    height: calc(100vh - 56px); /* full height minus navbar */
+    overflow: hidden;           /* prevent scrolling */
+    position: sticky;
+    top: 56px;                  /* aligns under the navbar */
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #f8f9fa;
+    padding: 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.sidebar .username h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.sidebar h6 {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.sidebar li {
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.sidebar li:hover {
+    background-color: #e9ecef;
+}
+
+.sidebar li.active-item {
+    background-color: #e2e6ea;
+    border-left: 4px solid #0d6efd;
+}
+
+.sidebar a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.sidebar a:hover {
+    color: #0d6efd;
+}
+
+.filter-dot,
+.category-box {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filters li:hover .filter-dot,
+.categories li:hover .category-box {
+    transform: scale(1.2);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.logout .btn {
+    width: 100%;
+    font-weight: 600;
+    text-align: center;     /* ensure the text is centered */
+    display: flex;          /* use flex to center content */
+    justify-content: center;/* horizontal center */
+    align-items: center;    /* vertical center */
+    padding: 0.5rem 0;      /* symmetric padding top/bottom */
+}
+
+/* ============================
+   Navbar
+============================ */
+/* Modern Minimalistic Navbar */
+/* Navbar Background & Shadow */
+.navbar-custom {
+    border-radius: 0 0 15px 15px;
+    background: linear-gradient(90deg, #0D6EFD, #6F42C1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-height: 60px;
+    padding: 0.6rem 1rem;
+}
+
+
+/* Navbar Brand */
+.navbar-brand {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: #fff;
+    padding-left: 2rem; /* space for badge */
+}
+.navbar-brand::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #4b15c9;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border-radius: 50%;
+    width: 1.4rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.navbar-brand:hover {
+    color: #ffd966; /* soft gold highlight */
+    transform: scale(1.05);
+}
+
+/* Navbar Username */
+.navbar-username {
+    display: inline-block;  /* make hover effects work properly */
+    color: #fff;            /* default color */
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;        /* shows it’s interactive */
+}
+
+.navbar-username:hover {
+    color: #bbb9cc;       /* valid 6-digit hex code */
+    transform: translateY(-1px);
+}
+
+
+/* Optional subtle divider between brand and username */
+.navbar-divider {
+    width: 1px;
+    background-color: rgba(255,255,255,0.3);
+    margin: 0 0.75rem;
+}
+
+/* ============================
+   Main content
+============================ */
+main {
+    flex-grow: 1;
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+    overflow-y: auto;          /* only main scrolls */
+    height: calc(100vh - 56px);
+}
+/* ============================
+   Task list items
+============================ */
+
+/* Info stays on the left */
+.task-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Title + badges formatting */
+.task-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-subinfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Actions (arrow + delete) aligned vertically */
+.task-actions {
+  display: flex;
+  align-items: center;  /* vertical alignment fix */
+  gap: 1rem;            /* proper spacing between arrow and delete */
+  margin-left: 1rem;
+}
+
+/* Arrow styles */
+.task-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 1.4rem;
+  color: #6c757d;
+  flex: 0 0 auto;
+}
+
+/* Delete button spacing */
+.delete-task-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #dee2e6;
+    margin-bottom: 0.75rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.task-item:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.task-list h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.task-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #212529;
+}
+
+.task-subinfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+.task-subinfo .badge {
+    margin-right: 0.35rem;
+}
+
+/* Make sure the arrow aligns properly */
+.task-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-arrow {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6c757d; /* subtle gray */
+  margin-left: auto; /* pushes it all the way to the right */
+}
+
+
+.task-item:hover .task-arrow {
+    color: #0d6efd;
+}
+
+.task-form-page {
+    background-color: #eef5ff; /* light blue or whatever you prefer */
+    min-height: 100vh;         /* make sure it covers full page height */
+    padding-top: 2rem;         /* spacing below navbar */
+    padding-bottom: 2rem;
+}
+
+/* ============================
+   Badges
+============================ */
+.task-item .badge-category {
+    color: #000 !important;
+    background-color: #e9ecef !important;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* Make priority badges match category badges under task titles */
+.task-subinfo .badge-priority {
+    padding: 0.18rem 0.6rem;      /* same as category badges */
+    font-size: 0.6rem;           /* same font size */
+    font-weight: 500;            /* same weight */
+    line-height: 1.2;            /* vertical alignment */
+    border-radius: 0.5rem;       /* same rounding */
+    display: inline-block;       /* same as category badges */
+    vertical-align: middle;      /* align with category badges */
+    min-width: auto;             /* allow width to fit text */
+    text-align: center;          /* center text */
+}
+
+
+.priority-low { background-color: #17a2b8 !important; }
+.priority-medium { background-color: #ffc107 !important; color: #000 !important; }
+.priority-high { background-color: #dc3545 !important; }
+/* Category colors */
+.badge-morning_routine { background-color: #e57373; color: #fff !important; }
+.badge-career { background-color: #4dabf5; color: #fff !important; }
+.badge-personal_growth { background-color: #4dbd98; color: #fff !important; }
+.badge-recreation { background-color: #9575cd; color: #fff !important; }
+
+/* ============================
+   Responsive tweaks
+============================ */
+@media (max-width: 768px) {
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+    }
+
+    .task-arrow {
+        align-self: flex-end;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 1rem;
+    }
+}
+/* -----------------------------
+   Minimalistic New Task Button in Sidebar
+----------------------------- */
+.btn-new-task-sidebar {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #0d6efd;
+    background-color: transparent;
+    border: 1px solid #0d6efd;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn-new-task-sidebar:hover {
+    background-color: #0d6efd;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-decoration: none;
+}
+
+/* Navbar username style */
+.navbar-username {
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-right: 1rem;
+}
+/* ============================
+   Sidebar Button Base Style
+============================ */
+.sidebar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    width: 100%;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+}
+
+/* All Tasks Sidebar Button - Minimal Text Design */
+.btn-all-tasks-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* align text to the left */
+    font-weight: 600;
+    font-size: 0.95rem;
+    width: 100%;
+    text-decoration: none; /* remove underline */
+    color: #0d6efd; /* blue text */
+    background-color: transparent; /* no box */
+    border: none; /* remove border */
+    padding: 0.45rem 0 0.45rem 0.35rem; /* moved a bit more left */
+    transition: all 0.2s ease;
+}
+
+.btn-all-tasks-sidebar:hover {
+    color: #0b5ed7; /* slightly darker blue on hover */
+    transform: translateX(4px); /* subtle movement to the right */
+    text-decoration: none; /* ensure no underline on hover */
+}
+
+
+/* Modern Minimal Hover for New Task Button */
+.btn-new-task-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    width: 100%;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    color: #0d6efd;
+    border: 2px solid #0d6efd;
+    background-color: transparent;
+}
+
+.btn-new-task-sidebar:hover {
+    background-color: rgba(13, 110, 253, 0.08); /* subtle blue background */
+    color: #0d6efd; /* keep text same color */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    text-decoration: none;
+}
+/* Sign Out Button */
+.btn-logout-sidebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    width: 100%;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.25s ease;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    background-color: transparent;
+}
+
+.btn-logout-sidebar:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    color: #000 !important; /* force text to black */
+}
+
+.delete-task-btn {
+    text-decoration: none !important;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.85rem;
+    border-radius: 0.35rem;
+    border: 1px solid #dc3545;
+    background-color: transparent;
+    color: #dc3545;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;           
+    align-items: center;
+    justify-content: center;
+
+}
+
+.delete-task-btn:hover {
+    text-decoration: none !important;
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #000;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+ 
+}
+
+/* ============================
+   Task completion visual fix
+============================ */
+
+
+
+/* Only strike-through task text and subinfo, NOT delete button */
+.task-item.completed .task-title,
+.task-item.completed .task-subinfo {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.task-item.completed .delete-task-btn {
+    text-decoration: none !important;
+    opacity: 1 !important; /* make sure delete button remains fully visible */
+}
+
+/* Checkmark spacing */
+.mark-completed-form,
+.task-item > div > div > .badge.bg-success {
+    margin-right: 0.5rem; /* space between checkmark and task title */
+}
+
+/* Make checkmark slightly larger for visibility */
+.mark-completed-form button,
+.task-item.completed .badge.bg-success {
+    font-size: 1rem;
+    font-weight: 700;
+}
+/* Checkmark button default */
+.btn-checkmark {
+    background-color: transparent;
+    border: 1px solid #198754; /* optional green border */
+    color: #198754; /* optional green text */
+    padding: 0.01rem 0.4rem;
+    border-radius: 0.35rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Prevent hover color change */
+.btn-checkmark:hover {
+    background-color: transparent;
+    color: #198754; /* keep same color, no highlight */
+    box-shadow: none;
+}
+
+/* Completed state */
+.btn-checkmark.completed {
+    background-color: #198754;
+    color: #fff;
+    border-color: #198754;
+}
+
+/* ============================
+   Task List Fixed Layout
+============================ */
+.task-list {
+    display: flex;
+    flex-direction: column; /* stack tasks vertically */
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.task-row {
+    display: block; /* each task row is independent */
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.75rem;
+    border: 1px solid #dee2e6;
+    margin-bottom: 0.4rem;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

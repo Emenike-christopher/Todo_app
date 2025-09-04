@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Todo App{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'Todo_app/style.css' %}">
+</head>
+<body>
+
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Todo-List Manager</a>
+        <div class="ms-auto">
+            {% if request.user.is_authenticated %}
+                <span class="navbar-username">
+                    Hello, {{ request.user.username }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- Layout wrapper -->
+<div class="d-flex" style="padding-top: 56px; min-height: 100vh;">
+
+{% if request.user.is_authenticated %}
+    <!-- Sidebar -->
+    <nav class="sidebar d-flex flex-column p-3">
+        <!-- All Tasks Shortcut -->
+        <div class="all-tasks mb-3">
+            <a href="{% url 'home' %}" class="btn btn-all-tasks-sidebar">All Tasks</a>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters mb-4">
+            <h6 class="text-uppercase small text-muted">Filters</h6>
+            <ul class="list-unstyled">
+                <li class="mb-2 d-flex align-items-center {% if active_status == 'pending' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?status=pending" class="text-decoration-none d-flex align-items-center">
+                        <span class="filter-dot" style="background-color: #FFA500;"></span>
+                        <span class="ms-2">Pending</span>
+                    </a>
+                </li>
+                <li class="d-flex align-items-center {% if active_status == 'completed' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?status=completed" class="text-decoration-none d-flex align-items-center">
+                        <span class="filter-dot" style="background-color: #28A745;"></span>
+                        <span class="ms-2">Completed</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories mb-4">
+            <h6 class="text-uppercase small text-muted">Categories</h6>
+            <ul class="list-unstyled">
+                <li class="mb-2 d-flex align-items-center {% if active_category == 'morning_routine' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?category=morning_routine" class="text-decoration-none d-flex align-items-center">
+                        <span class="category-box" style="background-color: #DC3545;"></span>
+                        <span class="ms-2">Morning Routine</span>
+                    </a>
+                </li>
+                <li class="mb-2 d-flex align-items-center {% if active_category == 'career' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?category=career" class="text-decoration-none d-flex align-items-center">
+                        <span class="category-box" style="background-color: #0D6EFD;"></span>
+                        <span class="ms-2">Career</span>
+                    </a>
+                </li>
+                <li class="mb-2 d-flex align-items-center {% if active_category == 'personal_growth' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?category=personal_growth" class="text-decoration-none d-flex align-items-center">
+                        <span class="category-box" style="background-color: #20C997;"></span>
+                        <span class="ms-2">Personal Growth</span>
+                    </a>
+                </li>
+                <li class="d-flex align-items-center {% if active_category == 'recreation' %}active-item{% endif %}">
+                    <a href="{% url 'home' %}?category=recreation" class="text-decoration-none d-flex align-items-center">
+                        <span class="category-box" style="background-color: #6F42C1;"></span>
+                        <span class="ms-2">Recreation</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- New Task Button -->
+        <div class="mb-4">
+            <a href="{% url 'task-create' %}" class="btn btn-new-task-sidebar">+ New Task</a>
+        </div>
+
+        <!-- Spacer -->
+        <div class="flex-grow-1"></div>
+
+        <!-- Logout Button -->
+        <div class="logout text-center mt-auto">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-logout-sidebar">Sign Out</button>
+            </form>
+        </div>
+    </nav>
+{% endif %}
+
+<!-- Main content -->
+<main class="{% if request.user.is_authenticated %}flex-grow-1 p-4 content-scroll{% else %}d-flex justify-content-center align-items-center p-4{% endif %}">
+    {% block content %}{% endblock %}
+</main>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

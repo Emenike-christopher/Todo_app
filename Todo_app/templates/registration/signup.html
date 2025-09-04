@@ -1,0 +1,31 @@
+{% extends "Todo_app/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="col-11 col-sm-8 col-md-6 col-lg-5" style="max-width: 400px; margin-top: -100px;">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-header bg-primary text-white rounded-top-3">
+            <h5 class="mb-0 text-center">Sign Up</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% bootstrap_form form layout='vertical' %}
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-new-task-sidebar">
+                        Sign Up
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-3">
+                <span class="text-muted">Already have an account?</span>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm ms-2">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

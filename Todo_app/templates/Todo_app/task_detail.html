@@ -1,0 +1,36 @@
+{% extends "Todo_app/base.html" %}
+
+{% block title %}Task Detail{% endblock %}
+
+{% block content %}
+<h2 class="task-title mb-3">
+    <span class="text-muted fs-5">Task Description:</span>
+    <span class="fw-bold text-dark fs-3">{{ task.title }}</span>
+</h2>
+
+<div class="task-detail">
+
+    <div class="task-item p-4">
+
+        <!-- Task Content -->
+        {% if task.content %}
+        <div class="mb-4">
+            <p>{{ task.content }}</p>
+        </div>
+        {% else %}
+        <p class="text-muted">No description available for this task.</p>
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="{% url 'task-update' task.id %}" class="btn btn-new-task-sidebar">
+                Edit Task
+            </a>
+            <a href="{% url 'task-delete' task.id %}" class="btn btn-logout-sidebar">
+                Delete Task
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
