@@ -21,44 +21,44 @@
 
 <div class="task-list">
   {% for task in tasks %}
-    <div class="task-row">
-      <div class="task-item {% if task.status == 'completed' %}completed{% endif %}">
-        
-        <!-- Left-side clickable area -->
-        <a href="{% url 'task-detail' task.id %}" class="task-link d-flex flex-grow-1 text-decoration-none">
-          <div class="d-flex align-items-center flex-grow-1">
+   <div class="task-row">
+  <div class="task-item {% if task.status == 'completed' %}completed{% endif %}">
 
-            {% if task.status != 'completed' %}
-            <form method="post" action="{% url 'toggle-task' task.id %}" class="mark-completed-form me-3">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-checkmark">✔</button>
-            </form>
-            {% else %}
-            <form method="post" action="{% url 'toggle-task' task.id %}" class="mark-completed-form me-2">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-sm btn-checkmark completed">✓</button>
-            </form>
+    <!-- Left-side clickable area -->
+    <a href="{% url 'task-detail' task.id %}" class="task-link d-flex flex-grow-1 text-decoration-none">
+      <div class="d-flex align-items-center flex-grow-1">
+
+        <!-- Toggle Status Button -->
+        <form method="post" action="{% url 'toggle-task' task.id %}" class="me-3">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-checkmark {% if task.status == 'completed' %}completed{% endif %}">
+            {% if task.status == 'completed' %}✓{% else %}✔{% endif %}
+          </button>
+        </form>
+
+        <!-- Task Info -->
+        <div class="task-info">
+          <div class="task-title">{{ task.title }}</div>
+          <div class="task-subinfo">
+            <span class="badge badge-{{ task.category }}">{{ task.get_category_display }}</span>
+            <span class="badge badge-priority priority-{{ task.priority }}">{{ task.priority|title }}</span>
+            {% if task.due_date %}
+            <small class="text-muted">Due: {{ task.due_date|date:"M d, Y" }}</small>
             {% endif %}
-
-            <div class="task-info">
-              <div class="task-title">{{ task.title }}</div>
-              <div class="task-subinfo">
-                <span class="badge badge-{{ task.category }}">{{ task.get_category_display }}</span>
-                <span class="badge badge-priority priority-{{ task.priority }}">{{ task.priority|title }}</span>
-                {% if task.due_date %}<small class="text-muted">Due: {{ task.due_date|date:"M d, Y" }}</small>{% endif %}
-              </div>
-            </div>
-
           </div>
-        </a>
-
-        <!-- Right-side delete button -->
-        <div class="d-flex align-items-center gap-2">
-          <a href="{% url 'task-delete' task.id %}" class="btn btn-sm btn-outline-danger delete-task-btn">🗑</a>
         </div>
 
       </div>
+    </a>
+
+    <!-- Right-side Delete Button -->
+    <div class="d-flex align-items-center gap-2">
+      <a href="{% url 'task-delete' task.id %}" class="btn btn-sm btn-outline-danger delete-task-btn">🗑</a>
     </div>
+
+  </div>
+</div>
+
   {% empty %}
     <div class="text-center py-5">
       {% if active_category %}

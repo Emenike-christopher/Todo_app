@@ -45,8 +45,8 @@ class TaskView(LoginRequiredMixin, ListView):
 
         return context
     
-      # NEW: Handle "Mark as Completed"
-    def post(self, request, *args, **kwargs):
+# "Mark as Completed"
+    def post(self, request,):
         task_id = request.POST.get('task_id')  # gets hidden input from form
         task = Task.objects.filter(id=task_id, user=request.user).first()
         if task:
@@ -107,8 +107,8 @@ class MarkTaskCompletedView(LoginRequiredMixin, View):
         return redirect(request.META.get('HTTP_REFERER', 'home'))
     
 class ToggleTaskStatusView(View):
-    def post(self, pk,):
-        task = get_object_or_404(Task, pk=pk )
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
         task.status = 'pending' if task.status == 'completed' else 'completed'
         task.save()
-        return redirect('home')  
+        return redirect('home')
